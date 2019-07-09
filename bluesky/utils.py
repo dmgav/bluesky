@@ -6,7 +6,7 @@ import signal
 import operator
 import uuid
 from functools import reduce
-from weakref import ref, WeakKeyDictionary
+from weakref import ref, WeakMethod, WeakKeyDictionary
 import types
 import importlib
 import inspect
@@ -294,10 +294,13 @@ class CallbackRegistry:
         return cid
 
     def _remove_proxy(self, proxy):
+        # The passed 'proxy' object points to empty object, so it
+        # equals only to itself and therefore may occur only once
         # need the list because `del self._func_cid_map[sig]` mutates the dict
         for sig, proxies in list(self._func_cid_map.items()):
             try:
                 del self.callbacks[sig][proxies[proxy]]
+                del self._func_cid_map[sig][proxy]
             except KeyError:
                 pass
 
@@ -358,10 +361,16 @@ class CallbackRegistry:
 
 class _BoundMethodProxy:
     '''
-    Our own proxy object which enables weak references to bound and unbound
+    Our own proxy object which enables weak references to bound 
     methods and arbitrary callables. Pulls information about the function,
-    class, and instance out of a bound method. Stores a weak reference to the
+    and class out of a bound method. Stores a weak reference to the
     instance to support garbage collection.
+    Relational operations are defined as follows:
+        - two objects of _BoundMethodProxy are ==, if they are pointing
+          to the same existing object.
+        - two objects are !=, if they are pointing to two different existing
+          objects or the same deleted object.
+        - if an object is pointing to a deleted object, then it is == only to itself.
     @organization: IBM Corporation
     @copyright: Copyright (c) 2005, 2006 IBM Corporation
     @license: The BSD License
@@ -371,16 +380,17 @@ class _BoundMethodProxy:
         self._hash = hash(cb)
         self._destroy_callbacks = []
         try:
-            try:
-                self.inst = ref(cb.__self__, self._destroy)
-            except TypeError:
-                self.inst = None
-            self.func = cb.__func__
+            # First assume that cb is a bound function
+            # (AttributeError exception will be thrown otherwise)
+            self.func = WeakMethod(cb, self._destroy)
             self.klass = cb.__self__.__class__
-        except AttributeError:
-            self.inst = None
-            self.func = cb
+        except (TypeError, AttributeError):
+            # cb is probably a function
             self.klass = None
+            try:
+                self.func = ref(cb, self._destroy)
+            except TypeError:
+                self.func = None
 
     def add_destroy_callback(self, callback):
         self._destroy_callbacks.append(_BoundMethodProxy(callback))
@@ -388,24 +398,28 @@ class _BoundMethodProxy:
     def _destroy(self, wk):
         for callback in self._destroy_callbacks:
             try:
+                # The reference to BoundMethodProxy function is passed
+                #     to the callback function
                 callback(self)
             except ReferenceError:
                 pass
 
     def __getstate__(self):
+        # Pickling does not work!!! 
         d = self.__dict__.copy()
-        # de-weak reference inst
-        inst = d['inst']
-        if inst is not None:
-            d['inst'] = inst()
+        # de-weak reference func
+        func = d['func']
+        if func is not None:
+            d['func'] = func()
         return d
 
     def __setstate__(self, statedict):
+        # Pickling does not work!!!
         self.__dict__ = statedict
-        inst = statedict['inst']
-        # turn inst back into a weakref
-        if inst is not None:
-            self.inst = ref(inst)
+        func = statedict['func']
+        # turn func back into a weakref
+        if func is not None:
+            self.func = ref(func)
 
     def __call__(self, *args, **kwargs):
         '''
@@ -414,19 +428,12 @@ class _BoundMethodProxy:
         Raises `ReferenceError`: When the weak reference refers to
         a dead object
         '''
-        if self.inst is not None and self.inst() is None:
+        if self.func is None:
+            return None
+        elif self.func() is None:
             raise ReferenceError
-        elif self.inst is not None:
-            # build a new instance method with a strong reference to the
-            # instance
-
-            mtd = types.MethodType(self.func, self.inst())
-
         else:
-            # not a bound method, just return the func
-            mtd = self.func
-        # invoke the callable and return the result
-        return mtd(*args, **kwargs)
+            return self.func()(*args, **kwargs)
 
     def __eq__(self, other):
         '''
@@ -434,10 +441,7 @@ class _BoundMethodProxy:
         another proxy.
         '''
         try:
-            if self.inst is None:
-                return self.func == other.func and other.inst is None
-            else:
-                return self.func == other.func and self.inst() == other.inst()
+            return self.func == other.func
         except Exception:
             return False
 
