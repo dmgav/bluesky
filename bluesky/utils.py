@@ -383,12 +383,15 @@ class _BoundMethodProxy:
             # First assume that cb is a bound function
             # (AttributeError exception will be thrown otherwise)
             self.func = WeakMethod(cb, self._destroy)
+            self.func2 = cb  #!!!
+            #self.inst = cb.__self__ #!!!
             self.klass = cb.__self__.__class__
         except (TypeError, AttributeError):
             # cb is probably a function
             self.klass = None
             try:
                 self.func = ref(cb, self._destroy)
+                self.func2 = cb  #!!!
             except TypeError:
                 self.func = None
 
