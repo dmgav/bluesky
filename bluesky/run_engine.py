@@ -416,6 +416,11 @@ class RunEngine:
         self.dispatcher = Dispatcher()
         self.ignore_callback_exceptions = False
 
+        # Enables/disables collection of telemetry data
+        self.telemetry_enable = False
+        # Callback: saving telemetry data
+        self.telemetry_save_cb = None
+
         # aliases for back-compatibility
         self.subscribe_lossless = self.dispatcher.subscribe
         self.unsubscribe_lossless = self.dispatcher.unsubscribe
@@ -1908,6 +1913,12 @@ class RunEngine:
         kwargs = dict(msg.kwargs)
         group = kwargs.pop('group', None)
         self._movable_objs_touched.add(msg.obj)
+
+        # Telemetry: load object configuration
+        telemetry_obj_config = msg.obj.read_configuration()
+        # Telemetry: time when message execution started
+        telemetry_time_start = ttime.time()
+
         ret = msg.obj.set(*msg.args, **kwargs)
         p_event = asyncio.Event(loop=self.loop)
         pardon_failures = self._pardon_failures
@@ -1918,7 +1929,10 @@ class RunEngine:
             task = self._loop.call_soon_threadsafe(
                 self._status_object_completed, ret, p_event, pardon_failures)
             self._status_tasks.append(task)
-
+            # Telemetry: time when message execution finished
+            telemetry_time_finish = ttime.time()
+            print(f"Telemetry: start - {telemetry_time_start}, finish - {telemetry_time_finish}")
+            print(f"Configuration: {telemetry_obj_config}")
         try:
             ret.add_callback(done_callback)
         except AttributeError:
