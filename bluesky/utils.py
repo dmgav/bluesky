@@ -1516,3 +1516,30 @@ def _rearrange_into_parallel_dicts(readings):
         data[key] = payload['value']
         timestamps[key] = payload['timestamp']
     return data, timestamps
+
+
+async def save_data_testing_cb(buffer):
+    for n, data_entry in enumerate(buffer):
+        print(f"Telemetry - entry #{n}: {data_entry}")
+
+
+class TelemetryDataBuffer:
+
+    def __init__(self):
+        self.data_buffer_primary = []
+        self.data_buffer_secondary = []
+        self.run_start_time = None
+
+    def reset(self, *, run_start_time=None):
+
+        if run_start_time is not None:
+            self.run_start_time=run_start_time
+
+        self.data_buffer_primary = []
+        self.data_buffer_secondary = []
+
+    def append(self, data_dict):
+        self.data_buffer_primary.append(data_dict)
+
+    async def save(self):
+        await save_data_testing_cb(self.data_buffer_primary)

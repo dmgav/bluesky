@@ -13,6 +13,7 @@ from contextlib import ExitStack
 import threading
 import weakref
 from .bundlers import RunBundler
+from .utils import TelemetryDataBuffer
 
 import concurrent
 
@@ -420,6 +421,8 @@ class RunEngine:
         self.telemetry_enable = False
         # Callback: saving telemetry data
         self.telemetry_save_cb = None
+        # Buffer for temporary storage of telemetry data
+        self.telemetry_data_buffer = TelemetryDataBuffer()
 
         # aliases for back-compatibility
         self.subscribe_lossless = self.dispatcher.subscribe
@@ -748,6 +751,9 @@ class RunEngine:
         if not self._state.is_idle:
             raise RuntimeError("The RunEngine is in a %s state" % self._state)
 
+        # Telemetry: initialize the buffer
+        self.telemetry_data_buffer.reset(run_start_time=ttime.time())
+
         futs = []
         tripped_justifications = []
         for sup in self.suspenders:
@@ -803,6 +809,9 @@ class RunEngine:
 
         if self._interrupted:
             raise RunEngineInterrupted(self.pause_msg) from None
+
+        # Telemetry: save remaining data
+        self.telemetry_data_buffer.save()
 
         return tuple(self._run_start_uids)
 
@@ -1917,22 +1926,26 @@ class RunEngine:
         # Telemetry: load object configuration
         telemetry_obj_config = msg.obj.read_configuration()
         # Telemetry: time when message execution started
-        telemetry_time_start = ttime.time()
+        telemetry_dict = {}
+        telemetry_dict['time_start'] = ttime.time()
+        telemetry_dict['config'] = telemetry_obj_config
 
         ret = msg.obj.set(*msg.args, **kwargs)
         p_event = asyncio.Event(loop=self.loop)
         pardon_failures = self._pardon_failures
 
-        def done_callback():
+        def done_callback(telemetry_dict=None):
             self.log.debug("The object %r reports set is done "
                            "with status %r", msg.obj, ret.success)
             task = self._loop.call_soon_threadsafe(
                 self._status_object_completed, ret, p_event, pardon_failures)
             self._status_tasks.append(task)
             # Telemetry: time when message execution finished
-            telemetry_time_finish = ttime.time()
-            print(f"Telemetry: start - {telemetry_time_start}, finish - {telemetry_time_finish}")
-            print(f"Configuration: {telemetry_obj_config}")
+            telemetry_dict['time_finish'] = ttime.time()
+            self.telemetry_data_buffer.append(telemetry_dict)
+
+        done_callback = functools.partial(done_callback, telemetry_dict=telemetry_dict)
+
         try:
             ret.add_callback(done_callback)
         except AttributeError:
