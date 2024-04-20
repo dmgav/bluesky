@@ -1,120 +1,561 @@
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../../">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bluesky.run_engine &mdash; bluesky 1.6.0rc2.dev1097+g387ec70f documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bluesky.run_engine &#8212; bluesky 1.6.0rc2.dev1167+gadd624e1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
   
-        <script src="../../_static/documentation_options.js?v=da373b4e"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/js/theme.js"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/documentation_options.js?v=b23ba2b0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/bluesky/run_engine';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.2';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://blueskyproject.io/bluesky/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.6.0rc2.dev1167+gadd624e1';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
-</head>
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-          
-          
-          <a href="../../index.html" class="icon icon-home">
-            bluesky
-          </a>
-              <div class="version">
-                1.6.0rc2.dev1097+g387ec70f
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../plans.html">Plans</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../documents.html">Documents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../metadata.html">Recording Metadata</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../callbacks.html">Live Visualization and Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../state-machine.html">Interruptions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../simulation.html">Simulation and Error Checking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../progress-bar.html">Progress Bar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../event_descriptors.html">Event Descriptors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../async.html">Asynchronous Acquisition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../multi_run_plans.html">Multi-Run Plans</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging and Logging</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../run_engine_api.html">RunEngine API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../utils.html">Utility classes and functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../magics.html">IPython ‘Magics’ [Experimental]</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../from-pyepics-to-bluesky.html">Translating Direct PyEpics Code to Bluesky Code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../comparison-with-spec.html">Comparison with SPEC</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../hardware-interfaces.html">Hardware Interface Packages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix.html">Appendix</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../hardware.html">How Bluesky Interfaces with Hardware</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../msg.html">Message Protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../run_engine.html">The RunEngine run loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api_changes.html">Release History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Data Collection</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://blueskyproject.io/bluesky">bluesky</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://blueskyproject.io/ophyd">ophyd</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Data Access and Management</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://blueskyproject.io/databroker">databroker</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://nsls-ii.github.io/amostra">amostra</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://nsls-ii.github.io/datamuxer">datamuxer</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://blueskyproject.io/suitcase">suitcase</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">GitHub Links</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/NSLS-II/">NSLS-II Repositories</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/NSLS-II/Bug-Reports/issues">Bug Reports</a></li>
-</ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-        </div>
-      </div>
-    </nav>
+  
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">bluesky</a>
-      </nav>
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/bluesky-logo-dark.svg" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../_static/bluesky-logo-dark.svg" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">bluesky</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../userindex.html">
+                        User Documentation
+                      </a>
+                    </li>
+                
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">bluesky.run_engine</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../devindex.html">
+                        Developer Documentation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://blueskyproject.io/bluesky">
+                        bluesky
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://blueskyproject.io/ophyd">
+                        ophyd
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://blueskyproject.io/databroker">
+                        databroker
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://nsls-ii.github.io/amostra">
+                        amostra
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://nsls-ii.github.io/datamuxer">
+                        datamuxer
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://blueskyproject.io/suitcase">
+                        suitcase
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://github.com/NSLS-II/">
+                        NSLS-II Repositories
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://github.com/NSLS-II/Bug-Reports/issues">
+                        Bug Reports
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
   </ul>
-  <hr/>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/bluesky/bluesky" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/bluesky" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-cube fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../userindex.html">
+                        User Documentation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../devindex.html">
+                        Developer Documentation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://blueskyproject.io/bluesky">
+                        bluesky
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://blueskyproject.io/ophyd">
+                        ophyd
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://blueskyproject.io/databroker">
+                        databroker
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links-2">
+                    More
+                </button>
+                <ul id="pst-nav-more-links-2" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://nsls-ii.github.io/amostra">
+                        amostra
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://nsls-ii.github.io/datamuxer">
+                        datamuxer
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://blueskyproject.io/suitcase">
+                        suitcase
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://github.com/NSLS-II/">
+                        NSLS-II Repositories
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-external" href="https://github.com/NSLS-II/Bug-Reports/issues">
+                        Bug Reports
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/bluesky/bluesky" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/bluesky" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-cube fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">bluesky.run_engine</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <h1>Source code for bluesky.run_engine</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">concurrent</span>
@@ -135,9 +576,10 @@
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 
 <span class="kn">from</span> <span class="nn">event_model</span> <span class="kn">import</span> <span class="n">DocumentNames</span>
-<span class="kn">from</span> <span class="nn">super_state_machine.errors</span> <span class="kn">import</span> <span class="n">TransitionError</span>
-<span class="kn">from</span> <span class="nn">super_state_machine.extras</span> <span class="kn">import</span> <span class="n">PropertyMachine</span>
-<span class="kn">from</span> <span class="nn">super_state_machine.machines</span> <span class="kn">import</span> <span class="n">StateMachine</span>
+
+<span class="kn">from</span> <span class="nn">bluesky._vendor.super_state_machine.errors</span> <span class="kn">import</span> <span class="n">TransitionError</span>
+<span class="kn">from</span> <span class="nn">bluesky._vendor.super_state_machine.extras</span> <span class="kn">import</span> <span class="n">PropertyMachine</span>
+<span class="kn">from</span> <span class="nn">bluesky._vendor.super_state_machine.machines</span> <span class="kn">import</span> <span class="n">StateMachine</span>
 
 <span class="kn">from</span> <span class="nn">.bundlers</span> <span class="kn">import</span> <span class="n">RunBundler</span><span class="p">,</span> <span class="n">maybe_await</span>
 <span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">ComposableLogAdapter</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">msg_logger</span><span class="p">,</span> <span class="n">state_logger</span>
@@ -951,6 +1393,8 @@
 <span class="sd">            If True, pause at the next checkpoint.</span>
 <span class="sd">            False by default.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;panicked&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;The RunEngine is panicked and cannot be recovered. You must restart bluesky.&quot;</span><span class="p">)</span>
         <span class="n">future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run_coroutine_threadsafe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_request_pause_coro</span><span class="p">(</span><span class="n">defer</span><span class="p">),</span> <span class="n">loop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">)</span>
         <span class="c1"># TODO add a timeout here?</span>
         <span class="k">return</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
@@ -1025,9 +1469,7 @@
 <span class="sd">            if :attr:`RunEngine._call_returns_result` is ``True``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;panicked&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The RunEngine is panicked and &quot;</span> <span class="s2">&quot;cannot be recovered. &quot;</span> <span class="s2">&quot;You must restart bluesky.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;The RunEngine is panicked and cannot be recovered. You must restart bluesky.&quot;</span><span class="p">)</span>
         <span class="c1"># This scheme lets us make &#39;plan&#39; and &#39;subs&#39; POSITIONAL ONLY, reserving</span>
         <span class="c1"># all keyword arguments for user metdata.</span>
         <span class="n">arguments</span> <span class="o">=</span> <span class="n">_call_sig</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_kw</span><span class="p">)</span><span class="o">.</span><span class="n">arguments</span>
@@ -1071,7 +1513,7 @@
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">justification</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
             <span class="nb">print</span><span class="p">()</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Suspending... To get to the prompt, &quot;</span> <span class="s2">&quot;hit Ctrl-C twice to pause.&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Suspending... To get to the prompt, hit Ctrl-C twice to pause.&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_clear_call_cache</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clear_run_cache</span><span class="p">()</span>  <span class="c1"># paranoia, in case of previous bad exit</span>
@@ -1133,14 +1575,12 @@
 <span class="sd">            if :attr:`RunEngine._call_returns_result` is ``True``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;panicked&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The RunEngine is panicked and &quot;</span> <span class="s2">&quot;cannot be recovered. &quot;</span> <span class="s2">&quot;You must restart bluesky.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;The RunEngine is panicked and cannot be recovered. You must restart bluesky.&quot;</span><span class="p">)</span>
 
         <span class="c1"># The state machine does not capture the whole picture.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">is_paused</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">TransitionError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;The RunEngine is the </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="si">}</span><span class="s2"> state. &quot;</span> <span class="s2">&quot;You can only resume for the paused state.&quot;</span> <span class="s2">&quot;&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;The RunEngine is the </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="si">}</span><span class="s2"> state. You can only resume for the paused state.&quot;</span>
             <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_interrupted</span> <span class="o">=</span> <span class="kc">False</span>
@@ -1367,7 +1807,7 @@
         <span class="k">async</span> <span class="k">def</span> <span class="nf">_request_suspend</span><span class="p">(</span><span class="n">pre_plan</span><span class="p">,</span> <span class="n">post_plan</span><span class="p">,</span> <span class="n">justification</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">resumable</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No checkpoint; cannot suspend.&quot;</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Aborting: running cleanup and marking &quot;</span> <span class="s2">&quot;exit_status as &#39;abort&#39;...&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Aborting: running cleanup and marking exit_status as &#39;abort&#39;...&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_interrupted</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state_lock</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span> <span class="o">=</span> <span class="n">FailedPause</span><span class="p">()</span>
@@ -1476,7 +1916,7 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_abort_coro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">is_idle</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">TransitionError</span><span class="p">(</span><span class="s2">&quot;RunEngine is already idle.&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Aborting: running cleanup and marking &quot;</span> <span class="s2">&quot;exit_status as &#39;abort&#39;...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Aborting: running cleanup and marking exit_status as &#39;abort&#39;...&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_interrupted</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reason</span> <span class="o">=</span> <span class="n">reason</span>
 
@@ -1522,7 +1962,7 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_stop_coro</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">is_idle</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">TransitionError</span><span class="p">(</span><span class="s2">&quot;RunEngine is already idle.&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stopping: running cleanup and marking exit_status &quot;</span> <span class="s2">&quot;as &#39;success&#39;...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stopping: running cleanup and marking exit_status as &#39;success&#39;...&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_interrupted</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">was_paused</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">==</span> <span class="s2">&quot;paused&quot;</span>
@@ -1565,9 +2005,7 @@
     <span class="k">def</span> <span class="nf">__interrupter_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coro</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;panicked&quot;</span><span class="p">:</span>
             <span class="n">coro</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The RunEngine is panicked and &quot;</span> <span class="s2">&quot;cannot be recovered. &quot;</span> <span class="s2">&quot;You must restart bluesky.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;The RunEngine is panicked and cannot be recovered. You must restart bluesky.&quot;</span><span class="p">)</span>
 
         <span class="n">coro_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
         <span class="n">task</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1591,7 +2029,7 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_halt_coro</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">is_idle</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">TransitionError</span><span class="p">(</span><span class="s2">&quot;RunEngine is already idle.&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Halting: skipping cleanup and marking exit_status as &quot;</span> <span class="s2">&quot;&#39;abort&#39;...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Halting: skipping cleanup and marking exit_status as &#39;abort&#39;...&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_interrupted</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">was_paused</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">==</span> <span class="s2">&quot;paused&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="s2">&quot;halting&quot;</span>
@@ -1812,12 +2250,11 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">_msg_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
                     <span class="c1"># try to look up the coroutine to execute the command</span>
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="n">coro</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command_registry</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">command</span><span class="p">]</span>
-                    <span class="c1"># replace KeyError with a local sub-class and go</span>
-                    <span class="c1"># to top of the loop</span>
-                    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                        <span class="c1"># TODO make this smarter</span>
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="n">coro</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command_registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">command</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+                    <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+                        <span class="c1"># flag invalid command</span>
+                        <span class="c1"># and return to the top of the loop</span>
                         <span class="n">new_response</span> <span class="o">=</span> <span class="n">InvalidCommand</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">command</span><span class="p">)</span>
                         <span class="k">continue</span>
 
@@ -1945,7 +2382,7 @@
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The plan </span><span class="si">{</span><span class="n">p</span><span class="si">!r}</span><span class="s2"> tried to yield a value on close.  &quot;</span> <span class="s2">&quot;Please fix your plan.&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The plan </span><span class="si">{</span><span class="n">p</span><span class="si">!r}</span><span class="s2"> tried to yield a value on close.  Please fix your plan.&quot;</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="s2">&quot;idle&quot;</span>
 
@@ -1989,9 +2426,7 @@
         <span class="c1"># TODO extract this from the Msg</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
         <span class="k">if</span> <span class="n">run_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span>
-                <span class="s2">&quot;A &#39;close_run&#39; message was not &quot;</span> <span class="s2">&quot;received before the &#39;open_run&#39; &quot;</span> <span class="s2">&quot;message&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;A &#39;close_run&#39; message was not received before the &#39;open_run&#39; message&quot;</span><span class="p">)</span>
 
         <span class="c1"># Run scan_id calculation method</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">md</span><span class="p">[</span><span class="s2">&quot;scan_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scan_id_source</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">md</span><span class="p">)</span>
@@ -2041,12 +2476,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO extract this from the Msg</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span>
-                <span class="s2">&quot;A &#39;close_run&#39; message was not &quot;</span> <span class="s2">&quot;received before the &#39;open_run&#39; &quot;</span> <span class="s2">&quot;message&quot;</span>
-            <span class="p">)</span> <span class="kn">from</span> <span class="nn">ke</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">)</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="s2">&quot;A &#39;close_run&#39; message was not received before the &#39;open_run&#39; message&quot;</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">close_run</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">ret</span>
@@ -2067,14 +2501,15 @@
 <span class="sd">        Descriptor document.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="s2">&quot;Cannot bundle readings without &quot;</span>
                 <span class="s2">&quot;an open run. That is, &#39;create&#39; must &quot;</span>
                 <span class="s2">&quot;be preceded by &#39;open_run&#39;.&quot;</span>
-            <span class="p">)</span> <span class="kn">from</span> <span class="nn">ke</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_declare_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
@@ -2094,14 +2529,15 @@
 <span class="sd">        on declare_stream, rather than `describe`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="s2">&quot;Cannot bundle readings without &quot;</span>
                 <span class="s2">&quot;an open run. That is, &#39;create&#39; must &quot;</span>
                 <span class="s2">&quot;be preceded by &#39;open_run&#39;.&quot;</span>
-            <span class="p">)</span> <span class="kn">from</span> <span class="nn">ke</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">declare_stream</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
@@ -2124,11 +2560,9 @@
                 <span class="s2">&quot;`read` must return a dictionary.&quot;</span>
             <span class="p">)</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="o">...</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
             <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ret</span>
@@ -2172,11 +2606,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;A &#39;monitor&#39; message was sent but no &quot;</span> <span class="s2">&quot;run is open.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ke</span>
-        <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="s2">&quot;A &#39;monitor&#39; message was sent but no run is open.&quot;</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_checkpoint_state_coro</span><span class="p">()</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_unmonitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
@@ -2188,11 +2624,13 @@
 <span class="sd">            Msg(&#39;unmonitor&#39;, obj)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;A &#39;unmonitor&#39; message was sent but no &quot;</span> <span class="s2">&quot;run is open.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ke</span>
-        <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">unmonitor</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="s2">&quot;An &#39;unmonitor&#39; message was sent but no run is open.&quot;</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">unmonitor</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_checkpoint_state_coro</span><span class="p">()</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
@@ -2203,14 +2641,15 @@
 <span class="sd">            Msg(&#39;save&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
             <span class="c1"># sanity check -- this should be caught by &#39;create&#39; which makes</span>
             <span class="c1"># this code path impossible</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;A &#39;save&#39; message was sent but no &quot;</span> <span class="s2">&quot;run is open.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ke</span>
-
-        <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="s2">&quot;A &#39;save&#39; message was sent but no run is open.&quot;</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Drop the event that is currently being bundled</span>
@@ -2220,11 +2659,13 @@
 <span class="sd">            Msg(&#39;drop&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;A &#39;drop&#39; message was sent but no &quot;</span> <span class="s2">&quot;run is open.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ke</span>
-        <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="s2">&quot;A &#39;drop&#39; message was sent but no run is open.&quot;</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare a flyer for a flyscan</span>
@@ -2246,7 +2687,7 @@
         <span class="n">pardon_failures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pardon_failures</span>
 
         <span class="k">def</span> <span class="nf">done_callback</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports set is done &quot;</span> <span class="s2">&quot;with status </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports set is done with status </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="o">.</span><span class="n">call_soon_threadsafe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status_object_completed</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="n">p_event</span><span class="p">,</span> <span class="n">pardon_failures</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -2280,10 +2721,11 @@
 <span class="sd">            Msg(&#39;kickoff&#39;, flyer_object, start, stop, step, group=&lt;name&gt;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;A &#39;kickoff&#39; message was sent but no &quot;</span> <span class="s2">&quot;run is open.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ke</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="s2">&quot;A &#39;kickoff&#39; message was sent but no run is open.&quot;</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
 
         <span class="n">_</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msg</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="n">check_supports</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Flyable</span><span class="p">)</span>
@@ -2298,7 +2740,7 @@
 
         <span class="k">def</span> <span class="nf">done_callback</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                <span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports &#39;kickoff&#39; is done &quot;</span> <span class="s2">&quot;with status </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports &#39;kickoff&#39; is done with status </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">obj</span><span class="p">,</span>
                 <span class="n">ret</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
             <span class="p">)</span>
@@ -2341,7 +2783,7 @@
 
         <span class="k">def</span> <span class="nf">done_callback</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                <span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports &#39;complete&#39; is done &quot;</span> <span class="s2">&quot;with status </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports &#39;complete&#39; is done with status </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">obj</span><span class="p">,</span>
                 <span class="n">ret</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
             <span class="p">)</span>
@@ -2366,10 +2808,12 @@
 <span class="sd">            Msg(&#39;collect&#39;, flyer_object, stream=True, return_payload=False, name=&quot;a_name&quot;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;A &#39;collect&#39; message was sent but no &quot;</span> <span class="s2">&quot;run is open.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ke</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+            <span class="c1"># TODO add test exercising this path</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="s2">&quot;A &#39;collect&#39; message was sent but no run is open.&quot;</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="n">current_run</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
@@ -2407,7 +2851,7 @@
         <span class="n">pardon_failures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pardon_failures</span>
 
         <span class="k">def</span> <span class="nf">done_callback</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports set is done &quot;</span> <span class="s2">&quot;with status </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports set is done with status </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="o">.</span><span class="n">call_soon_threadsafe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status_object_completed</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="n">p_event</span><span class="p">,</span> <span class="n">pardon_failures</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -2551,7 +2995,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">current_run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">current_run</span><span class="o">.</span><span class="n">bundling</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;Cannot &#39;checkpoint&#39; after &#39;create&#39; &quot;</span> <span class="s2">&quot;and before &#39;save&#39;. Aborting!&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;Cannot &#39;checkpoint&#39; after &#39;create&#39; and before &#39;save&#39;. Aborting!&quot;</span><span class="p">)</span>
 
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_checkpoint_state_coro</span><span class="p">()</span>
 
@@ -2615,13 +3059,13 @@
 <span class="sd">            object.configure(*args, **kwargs)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">run_key</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">run</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="p">[</span><span class="n">run_key</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">current_run</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_bundlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_key</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
             <span class="n">current_run</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">current_run</span><span class="o">.</span><span class="n">bundling</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;Cannot configure after &#39;create&#39; but before &#39;save&#39;&quot;</span> <span class="s2">&quot;Aborting!&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">current_run</span><span class="o">.</span><span class="n">bundling</span><span class="p">:</span>
+            <span class="n">ims_msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot configure after &#39;create&#39; but before &#39;save&#39; Aborting!&quot;</span>
+            <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="n">ims_msg</span><span class="p">)</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msg</span>
 
         <span class="n">old</span><span class="p">,</span> <span class="n">new</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -2634,9 +3078,7 @@
         <span class="n">pardon_failures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pardon_failures</span>
 
         <span class="k">def</span> <span class="nf">done_callback</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                <span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports </span><span class="si">%r</span><span class="s2"> is &quot;</span> <span class="s2">&quot;done with status </span><span class="si">%r</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">status_object</span><span class="o">.</span><span class="n">success</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The object </span><span class="si">%r</span><span class="s2"> reports </span><span class="si">%r</span><span class="s2"> is done with status </span><span class="si">%r</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">status_object</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="o">.</span><span class="n">call_soon_threadsafe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status_object_completed</span><span class="p">,</span> <span class="n">status_object</span><span class="p">,</span> <span class="n">p_event</span><span class="p">,</span> <span class="n">pardon_failures</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -2750,11 +3192,9 @@
 <span class="sd">        where ``TOKEN`` is the return value from ``RunEngine._subscribe()``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Removing subscription </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msg</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="p">(</span><span class="n">token</span><span class="p">,)</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msg</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">token</span> <span class="o">:=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="n">key_absence_sentinel</span> <span class="o">:=</span> <span class="nb">object</span><span class="p">()))</span> <span class="ow">is</span> <span class="n">key_absence_sentinel</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">token</span><span class="p">,)</span> <span class="o">=</span> <span class="n">arg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_temp_callback_ids</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_checkpoint_state_coro</span><span class="p">()</span>
@@ -3014,31 +3454,76 @@
     <span class="k">return</span> <span class="n">fut</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 </pre></div>
 
-           </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
           </div>
-          <footer>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2015, Brookhaven National Lab.</p>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
   </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
 
-</footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+  <p class="copyright">
+    
+      © Copyright 2015, Brookhaven National Lab.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
 
-</body>
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
 </html>
