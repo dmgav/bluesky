@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Live Visualization and Processing &#8212; bluesky 1.6.0rc2.dev1560+g0d25c16e documentation</title>
+    <title>Live Visualization and Processing &#8212; bluesky 1.6.0rc2.dev1596+g985b14a7 documentation</title>
   
   
   
@@ -39,14 +39,14 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=457043d1"></script>
+    <script src="_static/documentation_options.js?v=c9d7142a"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'callbacks';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://blueskyproject.io/bluesky/switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.6.0rc2.dev1560+g0d25c16e';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.6.0rc2.dev1596+g985b14a7';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
@@ -56,7 +56,7 @@
     <link rel="prev" title="Recording Metadata" href="metadata.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.6.0rc2.dev1560+g0d25c16e" />
+  <meta name="docsearch:version" content="1.6.0rc2.dev1596+g985b14a7" />
   </head>
   
   
@@ -743,16 +743,16 @@ row is added to the table. Demo:</p>
 <span class="go">+-----------+------------+------------+------------+</span>
 <span class="go">|   seq_num |       time |      motor |        det |</span>
 <span class="go">+-----------+------------+------------+------------+</span>
-<span class="go">|         1 | 14:44:54.0 |      1.000 |      0.607 |</span>
-<span class="go">|         2 | 14:44:54.0 |      2.000 |      0.135 |</span>
-<span class="go">|         3 | 14:44:54.0 |      3.000 |      0.011 |</span>
-<span class="go">|         4 | 14:44:54.0 |      4.000 |      0.000 |</span>
-<span class="go">|         5 | 14:44:54.0 |      5.000 |      0.000 |</span>
+<span class="go">|         1 | 22:19:23.7 |      1.000 |      0.607 |</span>
+<span class="go">|         2 | 22:19:23.7 |      2.000 |      0.135 |</span>
+<span class="go">|         3 | 22:19:23.7 |      3.000 |      0.011 |</span>
+<span class="go">|         4 | 22:19:23.7 |      4.000 |      0.000 |</span>
+<span class="go">|         5 | 22:19:23.7 |      5.000 |      0.000 |</span>
 <span class="go">+-----------+------------+------------+------------+</span>
-<span class="go">generator scan [&#39;3d889b8b&#39;] (scan num: 1)</span>
+<span class="go">generator scan [&#39;5cc9171e&#39;] (scan num: 1)</span>
 
 
-<span class="gh">Out[4]: </span><span class="go">(&#39;3d889b8b-4201-490a-9af2-6d02fda07796&#39;,)</span>
+<span class="gh">Out[4]: </span><span class="go">(&#39;5cc9171e-10de-4035-9b90-5422b598afcf&#39;,)</span>
 </pre></div>
 </div>
 <p>Pass an empty list of columns to show simply ‘time’ and ‘seq_num’ (sequence
@@ -1042,9 +1042,9 @@ pixel to fill in.</p>
 </dd>
 <dt><strong>xlabel, ylabel</strong><span class="classifier">str, optional</span></dt><dd><p>Labels for the x and y axis</p>
 </dd>
-<dt><strong>extent</strong><span class="classifier">scalars (left, right, bottom, top), optional</span></dt><dd><p>Passed through to <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.imshow.html#matplotlib.axes.Axes.imshow" title="(in Matplotlib v3.10.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.imshow()</span></code></a></p>
+<dt><strong>extent</strong><span class="classifier">scalars (left, right, bottom, top), optional</span></dt><dd><p>Passed through to <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.imshow.html#matplotlib.axes.Axes.imshow" title="(in Matplotlib v3.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.imshow()</span></code></a></p>
 </dd>
-<dt><strong>aspect</strong><span class="classifier">str or float, optional</span></dt><dd><p>Passed through to <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.imshow.html#matplotlib.axes.Axes.imshow" title="(in Matplotlib v3.10.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.imshow()</span></code></a></p>
+<dt><strong>aspect</strong><span class="classifier">str or float, optional</span></dt><dd><p>Passed through to <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.imshow.html#matplotlib.axes.Axes.imshow" title="(in Matplotlib v3.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.imshow()</span></code></a></p>
 </dd>
 <dt><strong>ax</strong><span class="classifier">Axes, optional</span></dt><dd><p>matplotib Axes; if none specified, new figure and axes are made.</p>
 </dd>
@@ -1419,23 +1419,23 @@ plans in <code class="xref py py-mod docutils literal notranslate"><span class="
 <span class="gp">In [9]: </span><span class="n">RE</span><span class="p">(</span><span class="n">scan</span><span class="p">(</span><span class="n">dets</span><span class="p">,</span> <span class="n">motor</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># automatically prints table, shows plot</span>
 
 
-<span class="go">Transient Scan ID: 2     Time: 2025-02-24 14:45:11</span>
-<span class="go">Persistent Unique Scan ID: &#39;518d6b57-486b-480b-9519-a3efd47f6f9d&#39;</span>
+<span class="go">Transient Scan ID: 2     Time: 2025-04-18 22:19:43</span>
+<span class="go">Persistent Unique Scan ID: &#39;20c61ecb-7cd6-4c0f-afaa-9c5527cc13de&#39;</span>
 <span class="go">New stream: &#39;primary&#39;</span>
 <span class="go">+-----------+------------+------------+------------+------------+</span>
 <span class="go">|   seq_num |       time |      motor |       det2 |       det1 |</span>
 <span class="go">+-----------+------------+------------+------------+------------+</span>
-<span class="go">|         1 | 14:45:11.3 |      1.000 |      0.271 |      0.000 |</span>
-<span class="go">|         2 | 14:45:11.5 |      2.000 |      0.271 |      0.000 |</span>
-<span class="go">|         3 | 14:45:11.7 |      3.000 |      0.271 |      0.000 |</span>
-<span class="go">|         4 | 14:45:11.9 |      4.000 |      0.271 |      0.000 |</span>
-<span class="go">|         5 | 14:45:12.0 |      5.000 |      0.271 |      0.000 |</span>
+<span class="go">|         1 | 22:19:43.4 |      1.000 |      0.271 |      0.000 |</span>
+<span class="go">|         2 | 22:19:43.6 |      2.000 |      0.271 |      0.000 |</span>
+<span class="go">|         3 | 22:19:43.8 |      3.000 |      0.271 |      0.000 |</span>
+<span class="go">|         4 | 22:19:43.9 |      4.000 |      0.271 |      0.000 |</span>
+<span class="go">|         5 | 22:19:44.1 |      5.000 |      0.271 |      0.000 |</span>
 <span class="go">+-----------+------------+------------+------------+------------+</span>
-<span class="go">generator scan [&#39;518d6b57&#39;] (scan num: 2)</span>
+<span class="go">generator scan [&#39;20c61ecb&#39;] (scan num: 2)</span>
 
 
 
-<span class="gh">Out[9]: </span><span class="go">(&#39;518d6b57-486b-480b-9519-a3efd47f6f9d&#39;,)</span>
+<span class="gh">Out[9]: </span><span class="go">(&#39;20c61ecb-7cd6-4c0f-afaa-9c5527cc13de&#39;,)</span>
 </pre></div>
 </div>
 <figure class="align-default">
@@ -1893,20 +1893,20 @@ We are setting up a <em>subscription</em>.</p>
 <span class="gp">In [13]: </span><span class="n">RE</span><span class="p">(</span><span class="n">count</span><span class="p">([</span><span class="n">det</span><span class="p">]),</span> <span class="p">{</span><span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="n">print_data</span><span class="p">})</span>
 
 
-<span class="go">Transient Scan ID: 3     Time: 2025-02-24 14:45:13</span>
-<span class="go">Persistent Unique Scan ID: &#39;ef7845af-5166-4a59-91a3-81a68c2e64dc&#39;</span>
+<span class="go">Transient Scan ID: 3     Time: 2025-04-18 22:19:45</span>
+<span class="go">Persistent Unique Scan ID: &#39;2b73ddcc-c8fe-4497-996d-0785889456e2&#39;</span>
 <span class="go">New stream: &#39;primary&#39;</span>
 <span class="go">+-----------+------------+------------+</span>
 <span class="go">|   seq_num |       time |        det |</span>
 <span class="go">+-----------+------------+------------+</span>
-<span class="go">|         1 | 14:45:13.3 |      0.000 |</span>
+<span class="go">|         1 | 22:19:45.3 |      0.000 |</span>
 <span class="go">Measured: {&#39;det&#39;: np.float64(3.726653172078671e-06)}</span>
 <span class="go">+-----------+------------+------------+</span>
-<span class="go">generator count [&#39;ef7845af&#39;] (scan num: 3)</span>
+<span class="go">generator count [&#39;2b73ddcc&#39;] (scan num: 3)</span>
 
 
 
-<span class="gh">Out[13]: </span><span class="go">(&#39;ef7845af-5166-4a59-91a3-81a68c2e64dc&#39;,)</span>
+<span class="gh">Out[13]: </span><span class="go">(&#39;2b73ddcc-c8fe-4497-996d-0785889456e2&#39;,)</span>
 </pre></div>
 </div>
 <p>Each time the RunEngine generates a new Event Document (i.e., data point)
@@ -2275,7 +2275,7 @@ class.</p>
 <dt class="sig sig-object py" id="bluesky.callbacks.stream.LiveDispatcher">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bluesky.callbacks.stream.</span></span><span class="sig-name descname"><span class="pre">LiveDispatcher</span></span><a class="reference internal" href="_modules/bluesky/callbacks/stream.html#LiveDispatcher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bluesky.callbacks.stream.LiveDispatcher" title="Link to this definition">#</a></dt>
 <dd><p>A secondary event stream of processed data</p>
-<p>The LiveDipatcher base implementation does not change any of the data
+<p>The LiveDispatcher base implementation does not change any of the data
 emitted, this task is left to sub-classes, but instead handles
 reimplementing a secondary event stream that fits the same schema demanded
 by the RunEngine itself. In order to reduce the work done by these
@@ -2539,7 +2539,7 @@ anywhere.</p>
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/bluesky/bluesky/edit/1.6.0rc2.dev1560+g0d25c16e/docs/callbacks.rst">
+    <a href="https://github.com/bluesky/bluesky/edit/1.6.0rc2.dev1596+g985b14a7/docs/callbacks.rst">
       <i class="fa-solid fa-pencil"></i>
       
       
