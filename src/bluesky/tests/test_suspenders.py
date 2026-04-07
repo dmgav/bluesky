@@ -15,6 +15,7 @@ from bluesky.suspenders import (
     SuspendFloor,
     SuspendInBand,
     SuspendOutBand,
+    SuspendWhenChanged,
     SuspendWhenOutsideBand,
 )
 from bluesky.tests.utils import MsgCollector
@@ -210,6 +211,17 @@ def test_pause_from_suspend(RE, hw):
     assert [m[0] for m in msg_lst] == ["wait_for"]
     RE.resume()
     assert ["wait_for", "wait_for", "checkpoint"] == [m[0] for m in msg_lst]
+
+
+def test_suspend_when_changed_preserves_falsy_expected_value(hw):
+    sig = hw.bool_sig
+    sig.put(1)
+
+    susp = SuspendWhenChanged(sig, expected_value=0)
+
+    assert susp.expected_value == 0
+    assert not susp._should_suspend(0)
+    assert susp._should_suspend(1)
 
 
 def test_deferred_pause_from_suspend(RE, hw):
