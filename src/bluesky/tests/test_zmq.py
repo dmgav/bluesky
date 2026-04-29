@@ -368,6 +368,7 @@ def test_zmq_RD_ports_spec(host):
         (("tcp", "localhost"), "tcp://localhost"),
         (("tcp", "localhost", 9), "tcp://localhost:9"),
         (("tcp", "localhost", "9"), "tcp://localhost:9"),
+        ((None), "tcp://*"),
     ],
 )
 def test_address_normaliaztion(address):

@@ -17,8 +17,14 @@ import copy
 import logging
 import pickle
 import warnings
+from collections.abc import Callable
 from pathlib import Path
-from typing import NamedTuple
+from typing import Any, NamedTuple
+
+import zmq
+import zmq.asyncio as zmq_asyncio
+import zmq.auth
+from zmq.auth.thread import ThreadAuthenticator
 
 from ..run_engine import Dispatcher, DocumentNames
 
@@ -92,13 +98,6 @@ class Publisher:
     prefix : bytes, optional
         User-defined bytestring used to distinguish between multiple
         Publishers. May not contain b' '.
-    RE : ``bluesky.RunEngine``, optional
-        DEPRECATED.
-        RunEngine to which the Publisher will be automatically subscribed
-        (and, more importantly, unsubscribed when it is closed).
-    zmq : object, optional
-        By default, the 'zmq' module is imported and used. Anything else
-        mocking its interface is accepted.
     serializer: function, optional
         optional function to serialize data. Default is pickle.dumps
     curve_config: ClientCurve, optional
@@ -114,25 +113,20 @@ class Publisher:
     >>> RE.subscribe(publisher)
     """
 
-    def __init__(self, address, *, prefix=b"", RE=None, zmq=None, serializer=pickle.dumps, curve_config=None):
-        if RE is not None:
-            warnings.warn(  # noqa: B028
-                "The RE argument to Publisher is deprecated and "
-                "will be removed in a future release of bluesky. "
-                "Update your code to subscribe this Publisher "
-                "instance to (and, if needed, unsubscribe from) to "
-                "the RunEngine manually."
-            )
+    def __init__(
+        self,
+        address: str | tuple[str, int],
+        *,
+        prefix: bytes = b"",
+        serializer: Callable = pickle.dumps,
+        curve_config: ServerCurve | ClientCurve | None = None,
+    ):
         if isinstance(prefix, str):
             raise ValueError("prefix must be bytes, not string")
         if b" " in prefix:
             raise ValueError(f"prefix {prefix!r} may not contain b' '")
-        if zmq is None:
-            import zmq
-            import zmq.auth
 
         self.address = _normalize_address(address)
-        self.RE = RE
 
         self._prefix = bytes(prefix)
         self._context = zmq.Context()
@@ -151,18 +145,14 @@ class Publisher:
             self._socket.setsockopt(zmq.CURVE_SERVERKEY, server_key)
 
         self._socket.connect(self.address)
-        if RE:
-            self._subscription_token = RE.subscribe(self)
         self._serializer = serializer
 
-    def __call__(self, name, doc):
+    def __call__(self, name: str, doc: dict[str, Any]):
         doc = copy.deepcopy(doc)
         message = b" ".join([self._prefix, name.encode(), self._serializer(doc)])
         self._socket.send(message)
 
     def close(self):
-        if self.RE:
-            self.RE.unsubscribe(self._subscription_token)
         self._socket.close()
         self._context.destroy()  # close Socket(s); terminate Context
 
@@ -188,17 +178,22 @@ class Proxy:
     ----------
     in_address : str or tuple or int, optional
         Address that RunEngines should broadcast to.
-
         If None, a random tcp port on all interfaces is used.
-
     out_address : str or tuple or int, optional
         Address that subscribers should subscribe to.
-
         If None, a random tcp port on all interfaces is used.
-
-    zmq : object, optional
-        By default, the 'zmq' module is imported and used. Anything else
-        mocking its interface is accepted.
+    in_curve: ServerCurve or ClientCurve or None, optional
+        CURVE security configuration for the incoming socket.  If None, no security is applied.
+    out_curve: ServerCurve or ClientCurve or None, optional
+        CURVE security configuration for the outgoing socket.  If None, no security is applied.
+    in_bind: bool, default True
+        If True, the incoming socket will be bound to the address.
+    out_bind: bool, default True
+        If True, the outgoing socket will be bound to the address.
+    in_port: str or None, optional
+        DEPRECATED alias for in_address.  If specified, must be used instead of in_address
+    out_port: str or None, optional
+        DEPRECATED alias for out_address.  If specified, must be used instead of out_address
 
     Attributes
     ----------
@@ -234,14 +229,28 @@ class Proxy:
 
     @staticmethod
     def configure_server_socket(
-        ctx,
-        sock_type,
+        ctx: zmq.Context,
+        sock_type: int,
         address: str | tuple | int | None,
         curve: ServerCurve | ClientCurve | None,
-        zmq,
-        auth_class,
         bind: bool = True,
     ):
+        """Helper method to create and bind or connect a socket with optional CURVE security.
+
+        Parameters
+        ----------
+        ctx : zmq.Context
+            The ZMQ context to use for creating the socket.
+        sock_type : int
+            The type of socket to create (e.g. zmq.SUB, zmq.PUB).
+        address : str | tuple | int | None
+            The address to bind or connect the socket to.
+        curve : ServerCurve | ClientCurve | None
+            CURVE security configuration. If None, no security is applied.
+        bind : bool, default True
+            If True, the socket will be bound to the address.
+        """
+
         socket = ctx.socket(sock_type)
         norm_address = _normalize_address(address)
         logger.debug(f"Creating socket of type {sock_type} for address {norm_address}, bind={bind}")
@@ -257,7 +266,7 @@ class Proxy:
                     raise TypeError("When bind=True, curve must be a ServerCurve instance")
                 logger.debug(f"Configuring CURVE server security with secret_path={curve.secret_path}")
                 # build authenticator
-                auth = auth_class(ctx)
+                auth = ThreadAuthenticator(ctx)
                 auth.start()
                 logger.debug("Started ZMQ authenticator")
                 if curve.allow is not None:
@@ -314,16 +323,15 @@ class Proxy:
 
     def __init__(
         self,
-        in_address=None,
-        out_address=None,
+        in_address: str | tuple[str, int] | None = None,
+        out_address: str | tuple[str, int] | None = None,
         *,
-        zmq=None,
-        in_curve=None,
-        out_curve=None,
-        in_bind=True,
-        out_bind=True,
-        in_port=None,
-        out_port=None,
+        in_curve: ServerCurve | ClientCurve | None = None,
+        out_curve: ServerCurve | ClientCurve | None = None,
+        in_bind: bool = True,
+        out_bind: bool = True,
+        in_port: str | None = None,
+        out_port: str | None = None,
     ):
         # Handle backward compatibility for in_port -> in_address
         if in_port is not None and in_address is not None:
@@ -352,22 +360,18 @@ class Proxy:
         # Delete deprecated parameter names
         del in_port, out_port
 
-        if zmq is None:
-            import zmq
-        self.zmq = zmq
         self.closed = False
 
         try:
-            context = zmq.Context(1)
-            from zmq.auth.thread import ThreadAuthenticator
+            context = zmq.Context()
 
             frontend, in_bind_result = self.configure_server_socket(
-                context, zmq.SUB, in_address, in_curve, zmq, ThreadAuthenticator, bind=in_bind
+                context, zmq.SUB, in_address, in_curve, bind=in_bind
             )
             frontend.setsockopt_string(zmq.SUBSCRIBE, "")
 
             backend, out_bind_result = self.configure_server_socket(
-                context, zmq.PUB, out_address, out_curve, zmq, ThreadAuthenticator, bind=out_bind
+                context, zmq.PUB, out_address, out_curve, bind=out_bind
             )
 
         except BaseException:
@@ -410,7 +414,7 @@ class Proxy:
                 f"This Proxy has already been started and interrupted. Create a fresh instance with {repr(self)}"
             )
         try:
-            self.zmq.device(self.zmq.FORWARDER, self._frontend, self._backend)
+            zmq.device(zmq.FORWARDER, self._frontend, self._backend)
         finally:
             self.closed = True
             self._frontend.close()
@@ -435,12 +439,7 @@ class RemoteDispatcher(Dispatcher):
         Publishers. If set, messages without this prefix will be ignored.
         If unset, no mesages will be ignored.
     loop : zmq.asyncio.ZMQEventLoop, optional
-    zmq : object, optional
-        By default, the 'zmq' module is imported and used. Anything else
-        mocking its interface is accepted.
-    zmq_asyncio : object, optional
-        By default, the 'zmq.asyncio' module is imported and used. Anything
-        else mocking its interface is accepted.
+        optional event loop to use.  Default is to create a new event loop.
     deserializer: function, optional
         optional function to deserialize data. Default is pickle.loads
 
@@ -456,26 +455,19 @@ class RemoteDispatcher(Dispatcher):
 
     def __init__(
         self,
-        address,
+        address: str | tuple[str, int],
         *,
-        prefix=b"",
-        loop=None,
-        zmq=None,
-        zmq_asyncio=None,
-        deserializer=pickle.loads,
-        strict=False,
-        curve_config=None,
+        prefix: bytes = b"",
+        loop: asyncio.AbstractEventLoop | None = None,
+        deserializer: Callable = pickle.loads,
+        strict: bool = False,
+        curve_config: ServerCurve | ClientCurve | None = None,
     ):
         if isinstance(prefix, str):
             raise ValueError("prefix must be bytes, not string")
         if b" " in prefix:
             raise ValueError(f"prefix {prefix!r} may not contain b' '")
         self._prefix = prefix
-        if zmq is None:
-            import zmq
-            import zmq.auth
-        if zmq_asyncio is None:
-            import zmq.asyncio as zmq_asyncio
 
         self._deserializer = deserializer
         self.address = _normalize_address(address)
