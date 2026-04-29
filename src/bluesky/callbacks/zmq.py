@@ -75,7 +75,7 @@ def _normalize_address(inp: str | tuple | int | None):
         rest_str = "*"
 
     else:
-        raise TypeError(f"Input expected to be int, str, or tuple, not {type(inp)}")
+        raise TypeError(f"Input expected to be int, str, or tuple, not {type(inp).__name__}")
 
     return f"{protocol}://{rest_str}"
 
@@ -234,7 +234,7 @@ class Proxy:
         address: str | tuple | int | None,
         curve: ServerCurve | ClientCurve | None,
         bind: bool = True,
-    ):
+    ) -> tuple[zmq.Socket, int | str]:
         """Helper method to create and bind or connect a socket with optional CURVE security.
 
         Parameters
@@ -249,9 +249,16 @@ class Proxy:
             CURVE security configuration. If None, no security is applied.
         bind : bool, default True
             If True, the socket will be bound to the address.
+
+        Returns
+        -------
+        socket : zmq.Socket
+            The configured ZMQ socket.
+        address : str
+            The addresss to which the socket is bound or connected.
         """
 
-        socket = ctx.socket(sock_type)
+        socket: zmq.Socket = ctx.socket(sock_type)
         norm_address = _normalize_address(address)
         logger.debug(f"Creating socket of type {sock_type} for address {norm_address}, bind={bind}")
         random_port = False
@@ -315,11 +322,17 @@ class Proxy:
                 port = socket.bind(norm_address)
                 logger.debug(f"Bound to address: {norm_address}")
         else:
-            socket.connect(norm_address)
-            port = norm_address
+            port = socket.connect(norm_address)
             logger.debug(f"Connected to address: {norm_address}")
 
-        return socket, port
+        # Socket.connect and Socket.bind return a SocketContext with an addr attribute.
+        # Socket.bind_to_random_port returns the port number directly.
+        # We want to return the final address in either case.
+        final_address = port.addr if hasattr(port, "addr") else _normalize_address(norm_address + ":" + str(port))
+
+        logger.debug(f"Socket configured with final address: {final_address}")
+
+        return socket, final_address
 
     def __init__(
         self,
@@ -365,12 +378,12 @@ class Proxy:
         try:
             context = zmq.Context()
 
-            frontend, in_bind_result = self.configure_server_socket(
+            frontend, self.in_port = self.configure_server_socket(
                 context, zmq.SUB, in_address, in_curve, bind=in_bind
             )
             frontend.setsockopt_string(zmq.SUBSCRIBE, "")
 
-            backend, out_bind_result = self.configure_server_socket(
+            backend, self.out_port = self.configure_server_socket(
                 context, zmq.PUB, out_address, out_curve, bind=out_bind
             )
 
@@ -390,20 +403,6 @@ class Proxy:
                 ...
             raise
         else:
-            self.in_port = (
-                in_bind_result.addr
-                if hasattr(in_bind_result, "addr")
-                else _normalize_address(in_bind_result)
-                if in_bind
-                else in_bind_result
-            )
-            self.out_port = (
-                out_bind_result.addr
-                if hasattr(out_bind_result, "addr")
-                else _normalize_address(out_bind_result)
-                if out_bind
-                else out_bind_result
-            )
             self._frontend = frontend
             self._backend = backend
             self._context = context
