@@ -33,14 +33,14 @@ def mock_zmq_context(mocker: MockerFixture):
             pass
 
         def bind(self, address):
-            return address
-
-        def bind_to_random_port(self, address):
             class MockConnectionResult:
                 def __init__(self, address):
                     self.addr = address
 
             return MockConnectionResult(address)
+
+        def bind_to_random_port(self, address):
+            return 12345
 
         def connect(self, address):
             class MockConnectionResult:
@@ -537,11 +537,16 @@ def test_cannot_bind_with_incorrect_curve(mock_zmq_context, tmp_path, cls):
         Proxy.configure_server_socket(ctx, zmq.PUB, None, curve=cls(*args), bind=cls == ClientCurve)
 
 
-def test_client_secret_not_found_raises_value_error(mock_zmq_context, mocker, tmp_path):
+@pytest.mark.parametrize("cls", [ServerCurve, ClientCurve])
+def test_secret_not_found_raises_value_error(mock_zmq_context, mocker, tmp_path, cls):
+    mocker.patch("bluesky.callbacks.zmq.ThreadAuthenticator")
     mocker.patch("zmq.auth.load_certificate", return_value=(None, None))
-    with pytest.raises(ValueError, match="The client secret key could not be found"):
+    curve_args = [tmp_path, tmp_path]
+    if cls == ServerCurve:
+        curve_args.append(None)  # ServerCurve takes an extra argument
+    with pytest.raises(ValueError, match=f"The {cls.__name__.lower()[:-5]} secret key could not be found"):
         ctx = zmq.Context()
-        Proxy.configure_server_socket(ctx, zmq.PUB, None, curve=ClientCurve(tmp_path, tmp_path), bind=False)
+        Proxy.configure_server_socket(ctx, zmq.PUB, None, curve=cls(*curve_args), bind=cls == ServerCurve)
 
 
 def test_configure_server_socket_client_curve(mock_zmq_context, mocker, tmp_path, caplog):

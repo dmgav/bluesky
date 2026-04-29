@@ -119,7 +119,7 @@ class Publisher:
         *,
         prefix: bytes = b"",
         serializer: Callable = pickle.dumps,
-        curve_config: ServerCurve | ClientCurve | None = None,
+        curve_config: ClientCurve | None = None,
     ):
         if isinstance(prefix, str):
             raise ValueError("prefix must be bytes, not string")
@@ -291,6 +291,8 @@ class Proxy:
 
                 # get public and private keys from the certificate
                 server_public, server_secret = zmq.auth.load_certificate(curve.secret_path)
+                if server_secret is None:
+                    raise ValueError("The server secret key could not be found.")
                 # attach them to the socket
                 socket.setsockopt(zmq.CURVE_PUBLICKEY, server_public)
                 socket.setsockopt(zmq.CURVE_SECRETKEY, server_secret)
@@ -317,18 +319,14 @@ class Proxy:
         if bind:
             if random_port:
                 port = socket.bind_to_random_port(norm_address)
+                final_address = norm_address + ":" + str(port)
                 logger.debug(f"Bound to random port: {port}")
             else:
-                port = socket.bind(norm_address)
+                final_address = socket.bind(norm_address).addr
                 logger.debug(f"Bound to address: {norm_address}")
         else:
-            port = socket.connect(norm_address)
+            final_address = socket.connect(norm_address).addr
             logger.debug(f"Connected to address: {norm_address}")
-
-        # Socket.connect and Socket.bind return a SocketContext with an addr attribute.
-        # Socket.bind_to_random_port returns the port number directly.
-        # We want to return the final address in either case.
-        final_address = port.addr if hasattr(port, "addr") else _normalize_address(norm_address + ":" + str(port))
 
         logger.debug(f"Socket configured with final address: {final_address}")
 
