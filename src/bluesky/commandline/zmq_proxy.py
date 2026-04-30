@@ -3,28 +3,27 @@ import logging
 import threading
 import warnings
 from pathlib import Path
+from typing import Any
 
 from bluesky.callbacks.zmq import ClientCurve, Proxy, RemoteDispatcher, ServerCurve
 
 logger = logging.getLogger("bluesky")
 
 
-def start_dispatcher(out_address, curve, logfile=None):
-    """The dispatcher function
+def start_dispatcher(out_address: str, curve: ClientCurve | None = None):
+    """Starts a remote dispatcher and subscribes a log writer to it.
+
     Parameters
     ----------
-    logfile : string
-        string come from user command. ex --logfile=temp.log
-        logfile will be "temp.log". logfile could be empty.
+    out_address : str
+        The address that the dispatcher will publish to.
+        This should match the address that subscribers will subscribe
+    curve : ClientCurve, optional
+        The CURVE security configuration for the dispatcher. If None, no CURVE security will be applied.
     """
     dispatcher = RemoteDispatcher(out_address, curve_config=curve)
-    if logfile is not None:
-        raise ValueError(
-            "Parameter 'logfile' is deprecated and will be removed in future releases. "
-            "Currently it does not have effect. Call the function with 'logfile=None' "
-        )
 
-    def log_writer(name, doc):
+    def log_writer(name: str, doc: dict[str, Any]):
         """logger's wrapper function
         This function will be used to fit .subscribe() method.
         It has two arguments as .subscribe expects. Inside, it
@@ -40,7 +39,30 @@ def start_dispatcher(out_address, curve, logfile=None):
     dispatcher.start()
 
 
+# Helper to build ServerCurve or None
+def build_server_curve(secret: str | None, client_keys: str | None, allow: list[str] | None) -> ServerCurve | None:
+    if secret is None:
+        if client_keys is not None or allow is not None:
+            raise ValueError("Cannot specify client_keys or allow without providing a secret key")
+        return None
+    secret_path = Path(secret)
+    client_public_keys = Path(client_keys) if client_keys else None
+    allow_set = set(allow) if allow else None
+    return ServerCurve(secret_path=secret_path, client_public_keys=client_public_keys, allow=allow_set)
+
+
+# Helper to build ClientCurve or None
+def build_client_curve(secret: str | None, server_public: str | None) -> ClientCurve | None:
+    if secret is None and server_public is None:
+        return None
+    if secret is None or server_public is None:
+        raise ValueError("Both client secret and server public key must be provided for CURVE client mode")
+    return ClientCurve(secret_path=Path(secret), server_public_key=Path(server_public))
+
+
 def main():
+    """Main entrypoint for the bluesky ZMQ proxy command-line interface."""
+
     DESC = "Start a 0MQ proxy for publishing bluesky documents over a network."
     parser = argparse.ArgumentParser(description=DESC)
     parser.add_argument("--in-address", help="port that RunEngines should broadcast to")
@@ -166,27 +188,6 @@ def main():
                 "Cannot use server CURVE options (--out-curve-secret, --out-curve-client-keys, --out-curve-allow) "
                 "when output is in connect mode"
             )
-
-    # Helper to build ServerCurve or None
-    def build_server_curve(
-        secret: str | None, client_keys: str | None, allow: list[str] | None
-    ) -> ServerCurve | None:
-        if secret is None:
-            if client_keys is not None or allow is not None:
-                raise ValueError("Cannot specify client_keys or allow without providing a secret key")
-            return None
-        secret_path = Path(secret)
-        client_public_keys = Path(client_keys) if client_keys else None
-        allow_set = set(allow) if allow else None
-        return ServerCurve(secret_path=secret_path, client_public_keys=client_public_keys, allow=allow_set)
-
-    # Helper to build ClientCurve or None
-    def build_client_curve(secret: str | None, server_public: str | None) -> ClientCurve | None:
-        if secret is None and server_public is None:
-            return None
-        if secret is None or server_public is None:
-            raise ValueError("Both client secret and server public key must be provided for CURVE client mode")
-        return ClientCurve(secret_path=Path(secret), server_public_key=Path(server_public))
 
     # Build CURVE configurations based on mode
     if in_bind:
