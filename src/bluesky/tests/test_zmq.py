@@ -470,7 +470,7 @@ def test_specify_port_and_address_raises(in_or_out):
 def test_proxy_fails_to_configure_sockets(
     mocker: MockerFixture, context_err: bool, frontend_err: bool, backend_err: bool
 ):
-    """Checks to make sure we are properly cleaning up resources. on failure"""
+    """Checks to make sure we are properly cleaning up resources on failure"""
 
     nclosed: int = 0
     ndestroyed: int = 0
