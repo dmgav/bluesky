@@ -241,8 +241,8 @@ def test_zmq_no_RE(RE: RunEngine):
     dispatcher_proc.terminate()
     proxy_proc.join()
     dispatcher_proc.join()
-    ra = sanitize_doc(remote_accumulator)
-    la = sanitize_doc(local_accumulator)
+    ra = [sanitize_doc(doc) for doc in remote_accumulator]
+    la = [sanitize_doc(doc) for doc in local_accumulator]
     assert ra == la
 
 
@@ -309,8 +309,8 @@ def test_zmq_no_RE_newserializer(RE: RunEngine):
     dispatcher_proc.terminate()
     proxy_proc.join()
     dispatcher_proc.join()
-    ra = sanitize_doc(remote_accumulator)
-    la = sanitize_doc(local_accumulator)
+    ra = [sanitize_doc(doc) for doc in remote_accumulator]
+    la = [sanitize_doc(doc) for doc in local_accumulator]
     assert ra == la
 
 
@@ -379,8 +379,8 @@ def test_zmq_prefix(RE: RunEngine, hw):
     dispatcher_proc.terminate()
     proxy_proc.join()
     dispatcher_proc.join()
-    ra = sanitize_doc(remote_accumulator)
-    la = sanitize_doc(local_accumulator)
+    ra = [sanitize_doc(doc) for doc in remote_accumulator]
+    la = [sanitize_doc(doc) for doc in local_accumulator]
     assert ra == la
 
 
