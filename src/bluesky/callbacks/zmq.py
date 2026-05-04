@@ -190,9 +190,9 @@ class Proxy:
         If True, the incoming socket will be bound to the address.
     out_bind: bool, default True
         If True, the outgoing socket will be bound to the address.
-    in_port: str or None, optional
+    in_port: int or None, optional
         DEPRECATED alias for in_address.  If specified, must be used instead of in_address
-    out_port: str or None, optional
+    out_port: int or None, optional
         DEPRECATED alias for out_address.  If specified, must be used instead of out_address
 
     Attributes
@@ -210,7 +210,7 @@ class Proxy:
 
     Run on specific ports.
 
-    >>> proxy = Proxy(5567, 5568)
+    >>> proxy = Proxy(in_address='localhost:5567', out_address='localhost:5568')
     >>> proxy
     Proxy(in_port=5567, out_port=5568)
     >>> proxy.start()  # runs until interrupted
@@ -341,8 +341,8 @@ class Proxy:
         out_curve: ServerCurve | ClientCurve | None = None,
         in_bind: bool = True,
         out_bind: bool = True,
-        in_port: str | None = None,
-        out_port: str | None = None,
+        in_port: int | None = None,
+        out_port: int | None = None,
     ):
         # Handle backward compatibility for in_port -> in_address
         if in_port is not None and in_address is not None:

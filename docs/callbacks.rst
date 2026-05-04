@@ -1118,7 +1118,7 @@ be run if they were in the local ``RunEngine`` process.
 
 Multiple Publishers (each with its own RunEngine) can send documents to the
 same proxy. RemoteDispatchers can filter the document stream based a byte
-prefix.
+prefix. 
 
 Minimal Example
 +++++++++++++++
@@ -1128,14 +1128,14 @@ arguments.
 
 .. code-block:: bash
 
-    bluesky-0MQ-proxy 5577 5578
+    bluesky-0MQ-proxy --in-address localhost:5577 --out-address localhost:5578
 
 Alternatively, you can start the proxy using a Python API:
 
 .. code-block:: python
 
     from bluesky.callbacks.zmq import Proxy
-    proxy = Proxy(5577, 5578)
+    proxy = Proxy(in_address='localhost:5577', out_address='localhost:5578')
     proxy.start()
 
 Start a callback that will receive documents from the proxy and, in this
