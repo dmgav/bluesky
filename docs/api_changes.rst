@@ -12,7 +12,7 @@ Added
 
 Changed
 -------
-- Dropped support for passing in depracated ``RE`` and ``zmq`` parameters to the ZMQ callback.
+- Dropped support for passing in deprecated ``RE`` and ``zmq`` parameters to the ZMQ callback.
 
 v1.15.0 (2026-04-15)
 ====================
