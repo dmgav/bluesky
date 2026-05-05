@@ -518,9 +518,9 @@ def test_dep_warning_if_using_port_args(mock_zmq_context, in_or_out: str):
     ):
         match in_or_out:
             case "in":
-                Proxy(in_port="tcp://localhost:5555")
+                Proxy(in_port=5555)
             case "out":
-                Proxy(out_port="tcp://localhost:5555")
+                Proxy(out_port=5555)
 
 
 @pytest.mark.parametrize("cls", [ServerCurve, ClientCurve])
