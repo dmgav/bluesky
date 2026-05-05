@@ -354,7 +354,7 @@ class Proxy:
                 DeprecationWarning,
                 stacklevel=2,
             )
-            in_address = in_port
+            in_address = f"localhost:{in_port}"
 
         # Handle backward compatibility for out_port -> out_address
         if out_port is not None and out_address is not None:
@@ -366,7 +366,7 @@ class Proxy:
                 DeprecationWarning,
                 stacklevel=2,
             )
-            out_address = out_port
+            out_address = f"localhost:{out_port}"
 
         # Delete deprecated parameter names
         del in_port, out_port
