@@ -1118,7 +1118,7 @@ be run if they were in the local ``RunEngine`` process.
 
 Multiple Publishers (each with its own RunEngine) can send documents to the
 same proxy. RemoteDispatchers can filter the document stream based a byte
-prefix. 
+prefix.
 
 Minimal Example
 +++++++++++++++
