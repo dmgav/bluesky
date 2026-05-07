@@ -667,7 +667,7 @@ class SuspendWhenChanged(SuspenderBase):
         tripped_message="",
         **kwargs,
     ):
-        self.expected_value = expected_value or signal.value
+        self.expected_value = signal.value if expected_value is None else expected_value
         self.allow_resume = allow_resume
         super().__init__(
             signal, sleep=sleep, pre_plan=pre_plan, post_plan=post_plan, tripped_message=tripped_message, **kwargs
