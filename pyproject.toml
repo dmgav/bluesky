@@ -86,6 +86,7 @@ dev = [
     "suitcase-jsonl",
     "suitcase-mongo",
     "suitcase-msgpack",
+    "sqlalchemy",
     "tifffile",
     "tox-direct",
     "types-mock",
