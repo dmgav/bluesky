@@ -1,7 +1,7 @@
 import warnings
 
 from bluesky_tiled_plugins import TiledWriter
-from bluesky_tiled_plugins.tiled_writer import RunNormalizer
+from bluesky_tiled_plugins.writing.tiled_writer import RunNormalizer
 
 warnings.warn(
     "The bluesky.callbacks.tiled_writer module is deprecated. "

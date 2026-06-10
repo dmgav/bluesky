@@ -1,6 +1,6 @@
 import warnings
 
-from bluesky_tiled_plugins.consolidators import (
+from bluesky_tiled_plugins.writing.consolidators import (
     ConsolidatorBase,
     CSVConsolidator,
     HDF5Consolidator,
