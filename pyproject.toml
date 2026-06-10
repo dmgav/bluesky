@@ -34,7 +34,6 @@ requires-python = ">=3.10"
 dev = [
     "attrs",
     "bluesky-tiled-plugins",
-    "cachetools",
     "cloudpickle",
     "copier",
     "coverage",
@@ -86,8 +85,8 @@ dev = [
     "suitcase-jsonl",
     "suitcase-mongo",
     "suitcase-msgpack",
-    "sqlalchemy",
     "tifffile",
+    "tiled[server]",
     "tox-direct",
     "types-mock",
     "vendoring",
