@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bluesky.bundlers &#8212; bluesky 1.6.0rc2.dev1871+g7c59ad71b documentation</title>
+    <title>bluesky.bundlers &#8212; bluesky 1.6.0rc2.dev2046+gd276e2bf8 documentation</title>
   
   
   
@@ -26,56 +26,491 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script src="../../_static/documentation_options.js?v=58c8bd36"></script>
+    <script src="../../_static/documentation_options.js?v=05922589"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
-    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-    <script type="module">
-import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
-window.addEventListener("load", () => mermaid.run());
-</script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}`;
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/bluesky/bundlers';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_version = '0.17.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://blueskyproject.io/bluesky/switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.6.0rc2.dev1871+g7c59ad71b';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.6.0rc2.dev2046+gd276e2bf8';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.6.0rc2.dev1871+g7c59ad71b" />
+  <meta name="docsearch:version" content="1.6.0rc2.dev2046+gd276e2bf8" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -101,7 +536,7 @@ window.addEventListener("load", () => mermaid.run());
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -542,10 +977,11 @@ window.addEventListener("load", () => mermaid.run());
 <span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ttime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">deque</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggerAdapter</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypeGuard</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">event_model</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ComposeDescriptorBundle</span><span class="p">,</span>
@@ -594,12 +1030,12 @@ window.addEventListener("load", () => mermaid.run());
 <span class="p">)</span>
 
 <span class="n">ObjDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">T</span><span class="p">]]</span>
-<span class="n">ExternalAssetDoc</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Datum</span><span class="p">,</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">StreamDatum</span><span class="p">,</span> <span class="n">StreamResource</span><span class="p">]</span>
+<span class="n">ExternalAssetDoc</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Datum</span> <span class="o">|</span> <span class="n">Resource</span> <span class="o">|</span> <span class="n">StreamDatum</span> <span class="o">|</span> <span class="n">StreamResource</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_describe_collect_dict_is_valid</span><span class="p">(</span>
-    <span class="n">describe_collect_dict</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># TODO: change to TypeGuard[dict[str, DataKey]] after python 3.9</span>
+    <span class="n">describe_collect_dict</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TypeGuard</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if the describe_collect dictionary contains valid DataKeys.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -611,6 +1047,64 @@ window.addEventListener("load", () => mermaid.run());
     <span class="p">)</span>
 
 
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_StreamCache</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper data class that holds all cached data related to devices for a partiuclar stream.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Readable</span>
+    <span class="c1"># cache of obj.read() in one Event</span>
+    <span class="n">read_cache</span><span class="p">:</span> <span class="n">deque</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Reading</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">deque</span><span class="p">)</span>
+    <span class="c1"># cache of all obj.describe() output</span>
+    <span class="n">describe_cache</span><span class="p">:</span> <span class="n">ObjDict</span><span class="p">[</span><span class="n">DataKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="c1"># Configurable</span>
+    <span class="c1"># obj.describe_configuration()</span>
+    <span class="n">config_desc_cache</span><span class="p">:</span> <span class="n">ObjDict</span><span class="p">[</span><span class="n">DataKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="c1"># obj.read_configuration() values</span>
+    <span class="n">config_values_cache</span><span class="p">:</span> <span class="n">ObjDict</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="c1"># obj.read_configuration() timestamps</span>
+    <span class="n">config_ts_cache</span><span class="p">:</span> <span class="n">ObjDict</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">ensure_cached</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">collect</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cache objects Readable and Configurable methods. Cache Collectable methods if collect is True.&quot;&quot;&quot;</span>
+        <span class="n">coros</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">collect</span> <span class="ow">and</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">describe_cache</span><span class="p">:</span>
+            <span class="n">coros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_describe</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_desc_cache</span><span class="p">:</span>
+            <span class="n">coros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_describe_config</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+            <span class="n">coros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_read_config</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">coros</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cache_describe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="s2">&quot;Read the object&#39;s describe and cache it.&quot;</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">check_supports</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Readable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">maybe_await</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cache_describe_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="s2">&quot;Read the object&#39;s describe_configuration and cache it.&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Configurable</span><span class="p">):</span>
+            <span class="n">conf_keys</span> <span class="o">=</span> <span class="k">await</span> <span class="n">maybe_await</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">describe_configuration</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">conf_keys</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_desc_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">conf_keys</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">cache_read_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="s2">&quot;Read the object&#39;s configuration and cache it.&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Configurable</span><span class="p">):</span>
+            <span class="n">conf</span> <span class="o">=</span> <span class="k">await</span> <span class="n">maybe_await</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">read_configuration</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">conf</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">config_values</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">config_ts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">conf</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">config_values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+            <span class="n">config_ts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_values_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">config_values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_ts_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">config_ts</span>
+
+
 <div class="viewcode-block" id="RunBundler">
 <a class="viewcode-back" href="../../generated/bluesky.bundlers.RunBundler.html#bluesky.bundlers.RunBundler">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RunBundler</span><span class="p">:</span>
@@ -618,7 +1112,7 @@ window.addEventListener("load", () => mermaid.run());
 <a class="viewcode-back" href="../../generated/bluesky.bundlers.RunBundler.html#bluesky.bundlers.RunBundler.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">md</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
+        <span class="n">md</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">record_interruptions</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">emit</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
         <span class="n">emit_sync</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
@@ -633,14 +1127,15 @@ window.addEventListener("load", () => mermaid.run());
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle_name</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># name given to event descriptor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_run_start_uid</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># The (future) runstart uid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_objs_read</span><span class="p">:</span> <span class="n">deque</span><span class="p">[</span><span class="n">HasName</span><span class="p">]</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>  <span class="c1"># objects read in one Event</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_read_cache</span><span class="p">:</span> <span class="n">deque</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Reading</span><span class="p">]]</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>  <span class="c1"># cache of obj.read() in one Event</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_asset_docs_cache</span><span class="p">:</span> <span class="n">deque</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Asset</span><span class="p">,</span> <span class="n">StreamAsset</span><span class="p">]]</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>  <span class="c1"># cache of obj.collect_asset_docs()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_cache</span><span class="p">:</span> <span class="n">ObjDict</span><span class="p">[</span><span class="n">DataKey</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># cache of all obj.describe() output  # noqa: C408</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_collect_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]]]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># noqa: C408  # cache of all obj.describe() output</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_config_desc_cache</span><span class="p">:</span> <span class="n">ObjDict</span><span class="p">[</span><span class="n">DataKey</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># &quot; obj.describe_configuration()  # noqa: C408</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_config_values_cache</span><span class="p">:</span> <span class="n">ObjDict</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># &quot; obj.read_configuration() values  # noqa: C408</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_config_ts_cache</span><span class="p">:</span> <span class="n">ObjDict</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># &quot; obj.read_configuration() timestamps  # noqa: C408</span>
+        <span class="c1"># Collectable</span>
+        <span class="c1"># cache of all obj.describe_collect() output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_collect_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># noqa: C408</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_saved_stream_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_StreamCache</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># noqa: C408</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="p">:</span> <span class="n">_StreamCache</span> <span class="o">=</span> <span class="n">_StreamCache</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_asset_docs_cache</span><span class="p">:</span> <span class="n">deque</span><span class="p">[</span><span class="n">Asset</span> <span class="o">|</span> <span class="n">StreamAsset</span><span class="p">]</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>  <span class="c1"># cache of obj.collect_asset_docs()</span>
+
         <span class="c1"># cache of {name: (doc, compose_event, compose_event_page)}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_descriptors</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">ComposeDescriptorBundle</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># noqa: C408</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_descriptor_objs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="n">HasName</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># noqa: C408</span>
@@ -681,6 +1176,11 @@ window.addEventListener("load", () => mermaid.run());
         <span class="bp">self</span><span class="o">.</span><span class="n">_compose_resource</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">compose_resource</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compose_stop</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">compose_stop</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compose_stream_resource</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">compose_stream_resource</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span> <span class="o">=</span> <span class="n">_StreamCache</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_saved_stream_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_collect_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">DocumentNames</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
         <span class="n">doc_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
@@ -770,9 +1270,9 @@ window.addEventListener("load", () => mermaid.run());
                 <span class="n">dks</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;object_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span>
             <span class="n">data_keys</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dks</span><span class="p">)</span>
             <span class="n">config</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_values_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">],</span>
-                <span class="s2">&quot;timestamps&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_ts_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">],</span>
-                <span class="s2">&quot;data_keys&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_desc_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">],</span>
+                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">config_values_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">],</span>
+                <span class="s2">&quot;timestamps&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">config_ts_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">],</span>
+                <span class="s2">&quot;data_keys&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">config_desc_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">],</span>
             <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_descriptors</span><span class="p">[</span><span class="n">desc_key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compose_descriptor</span><span class="p">(</span>
@@ -801,17 +1301,6 @@ window.addEventListener("load", () => mermaid.run());
             <span class="nb">list</span><span class="p">(</span><span class="n">objs_dks</span><span class="p">),</span>
         <span class="p">)</span>
 
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_ensure_cached</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">collect</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="n">coros</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">collect</span> <span class="ow">and</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_describe_cache</span><span class="p">:</span>
-            <span class="n">coros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_describe</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">collect</span> <span class="ow">and</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_describe_collect_cache</span><span class="p">:</span>
-            <span class="n">coros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_describe_collect</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_desc_cache</span><span class="p">:</span>
-            <span class="n">coros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_describe_config</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
-            <span class="n">coros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_read_config</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
-        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">coros</span><span class="p">)</span>
-
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">declare_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate and emit an EventDescriptor.&quot;&quot;&quot;</span>
         <span class="n">command</span><span class="p">,</span> <span class="n">no_obj</span><span class="p">,</span> <span class="n">objs</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msg</span>
@@ -822,6 +1311,8 @@ window.addEventListener("load", () => mermaid.run());
         <span class="k">assert</span> <span class="n">no_obj</span> <span class="ow">is</span> <span class="kc">None</span>
         <span class="n">objs</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">objs</span><span class="p">)</span>
         <span class="n">objs_dks</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {collect_object: stream_data_keys}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_stream_cache</span><span class="p">(</span><span class="n">stream_name</span><span class="p">)</span>
 
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_ensure_cached</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">collect</span><span class="o">=</span><span class="n">collect</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
@@ -837,7 +1328,7 @@ window.addEventListener("load", () => mermaid.run());
                     <span class="sa">f</span><span class="s2">&quot;not return a single Dict[str, DataKey] for the passed in </span><span class="si">{</span><span class="n">stream_name</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">data_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span>
+                <span class="n">data_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span>
 
             <span class="n">objs_dks</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_keys</span>
 
@@ -845,6 +1336,14 @@ window.addEventListener("load", () => mermaid.run());
         <span class="n">existing_stream_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stream_name</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_stream</span><span class="p">(</span><span class="n">stream_name</span><span class="p">,</span> <span class="n">objs_dks</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_current_stream_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">stream_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_saved_stream_cache</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_saved_stream_cache</span><span class="p">[</span><span class="n">stream_name</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">read_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span> <span class="o">=</span> <span class="n">_StreamCache</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_saved_stream_cache</span><span class="p">[</span><span class="n">stream_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span>
 
 <div class="viewcode-block" id="RunBundler.create">
 <a class="viewcode-back" href="../../generated/bluesky.bundlers.RunBundler.create.html#bluesky.bundlers.RunBundler.create">[docs]</a>
@@ -870,7 +1369,6 @@ window.addEventListener("load", () => mermaid.run());
                 <span class="s2">&quot;bundle is closed with a &#39;save&#39; or &quot;</span>
                 <span class="s2">&quot;&#39;drop&#39; message.&quot;</span>
             <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_read_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_asset_docs_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_objs_read</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bundling</span> <span class="o">=</span> <span class="kc">True</span>
@@ -887,7 +1385,9 @@ window.addEventListener("load", () => mermaid.run());
                 <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strict_pre_declare</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_descriptors</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;In strict mode you must pre-declare streams.&quot;</span><span class="p">)</span></div>
+                <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="s2">&quot;In strict mode you must pre-declare streams.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_stream_cache</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle_name</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="RunBundler.read">
@@ -908,14 +1408,14 @@ window.addEventListener("load", () => mermaid.run());
             <span class="c1"># on the same device you make obj.describe() calls multiple times.</span>
             <span class="c1"># As this is harmless and not an expected use case, we don&#39;t guard</span>
             <span class="c1"># against it. Reading multiple devices concurrently works fine.</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_cached</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">ensure_cached</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
             <span class="c1"># check that current read collides with nothing else in</span>
             <span class="c1"># current event</span>
-            <span class="n">cur_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">cur_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
             <span class="k">for</span> <span class="n">read_obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objs_read</span><span class="p">:</span>
                 <span class="c1"># that is, field names</span>
-                <span class="n">known_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_describe_cache</span><span class="p">[</span><span class="n">read_obj</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="n">known_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">describe_cache</span><span class="p">[</span><span class="n">read_obj</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
                 <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">known_keys</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">cur_keys</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s2">&quot;Data keys (field names) from </span><span class="si">{</span><span class="n">obj</span><span class="si">!r}</span><span class="s2"> &quot;</span>
@@ -928,7 +1428,7 @@ window.addEventListener("load", () => mermaid.run());
 
             <span class="c1"># Stash the results, which will be emitted the next time _save is</span>
             <span class="c1"># called --- or never emitted if _drop is called instead.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_read_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">read_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
             <span class="c1"># Ask the object for any resource or datum documents is has cached</span>
             <span class="c1"># and cache them as well. Likewise, these will be emitted if and</span>
             <span class="c1"># when _save is called.</span>
@@ -937,35 +1437,6 @@ window.addEventListener("load", () => mermaid.run());
 
         <span class="k">return</span> <span class="n">reading</span></div>
 
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cache_describe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="s2">&quot;Read the object&#39;s describe and cache it.&quot;</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="n">check_supports</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Readable</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">maybe_await</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cache_describe_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="s2">&quot;Read the object&#39;s describe_configuration and cache it.&quot;</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Configurable</span><span class="p">):</span>
-            <span class="n">conf_keys</span> <span class="o">=</span> <span class="k">await</span> <span class="n">maybe_await</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">describe_configuration</span><span class="p">())</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">conf_keys</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_config_desc_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">conf_keys</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cache_read_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="s2">&quot;Read the object&#39;s configuration and cache it.&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Configurable</span><span class="p">):</span>
-            <span class="n">conf</span> <span class="o">=</span> <span class="k">await</span> <span class="n">maybe_await</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">read_configuration</span><span class="p">())</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">conf</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">config_values</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">config_ts</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">conf</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">config_values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
-            <span class="n">config_ts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_config_values_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">config_values</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_config_ts_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">config_ts</span>
 
 <div class="viewcode-block" id="RunBundler.monitor">
 <a class="viewcode-back" href="../../generated/bluesky.bundlers.RunBundler.monitor.html#bluesky.bundlers.RunBundler.monitor">[docs]</a>
@@ -993,12 +1464,12 @@ window.addEventListener("load", () => mermaid.run());
         <span class="k">if</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_monitor_params</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">IllegalMessageSequence</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;A &#39;monitor&#39; message was sent for </span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="s2"> which is already monitored&quot;</span><span class="p">)</span>
 
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_cached</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">ensure_cached</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
-        <span class="n">stream_bundle</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_stream</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="n">obj</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]})</span>
+        <span class="n">stream_bundle</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_stream</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="n">obj</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]})</span>
         <span class="n">compose_event</span> <span class="o">=</span> <span class="n">stream_bundle</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">emit_event</span><span class="p">(</span><span class="n">readings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Reading</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">emit_event</span><span class="p">(</span><span class="n">readings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Reading</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">readings</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># We were passed something we can use, but check no args or kwargs</span>
                 <span class="k">assert</span> <span class="ow">not</span> <span class="n">args</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="p">,</span> <span class="p">(</span>
@@ -1132,8 +1603,8 @@ window.addEventListener("load", () => mermaid.run());
         <span class="k">if</span> <span class="n">descriptor_doc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">d_objs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># use the dequeue not the set to preserve order</span>
             <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objs_read</span><span class="p">:</span>
-                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_cached</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">collect</span><span class="o">=</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Collectable</span><span class="p">))</span>
-                <span class="n">objs_dks</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span>
+                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">ensure_cached</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">collect</span><span class="o">=</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Collectable</span><span class="p">))</span>
+                <span class="n">objs_dks</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">describe_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span>
 
             <span class="n">descriptor_doc</span><span class="p">,</span> <span class="n">compose_event</span><span class="p">,</span> <span class="n">d_objs</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_stream</span><span class="p">(</span><span class="n">desc_key</span><span class="p">,</span> <span class="n">objs_dks</span><span class="p">)</span>
 
@@ -1151,7 +1622,7 @@ window.addEventListener("load", () => mermaid.run());
             <span class="p">)</span>
 
         <span class="c1"># Merge list of readings into single dict.</span>
-        <span class="n">readings</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_cache</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="n">readings</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">read_cache</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
         <span class="n">data</span><span class="p">,</span> <span class="n">timestamps</span> <span class="o">=</span> <span class="n">_rearrange_into_parallel_dicts</span><span class="p">(</span><span class="n">readings</span><span class="p">)</span>
         <span class="c1"># Mark all externally-stored data as not filled so that consumers</span>
         <span class="c1"># know that the corresponding data are identifiers, not dereferenced</span>
@@ -1268,8 +1739,8 @@ window.addEventListener("load", () => mermaid.run());
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_format_datakeys_with_stream_name</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">describe_collect_dict</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]]],</span>
-        <span class="n">message_stream_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">describe_collect_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]],</span>
+        <span class="n">message_stream_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the dictionary returned by describe collect is a dict</span>
@@ -1280,22 +1751,20 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_contains_message_stream_name</span><span class="p">(</span>
-            <span class="n">describe_collect_dict</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
-        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># TODO: change to TypeGuard[dict[str, dict[str, DataKey]]] after python 3.9</span>
+            <span class="n">describe_collect_dict</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TypeGuard</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]]]:</span>
             <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">describe_collect_dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
                 <span class="n">_describe_collect_dict_is_valid</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">describe_collect_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">describe_collect_dict</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_describe_collect_dict_is_valid</span><span class="p">(</span><span class="n">describe_collect_dict</span><span class="p">):</span>
-                <span class="c1"># TODO: remove cast after python 3.9 is no longer supported</span>
-                <span class="n">flat_describe_collect_dict</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">],</span> <span class="n">describe_collect_dict</span><span class="p">)</span>
+                <span class="n">flat_describe_collect_dict</span> <span class="o">=</span> <span class="n">describe_collect_dict</span>
                 <span class="k">return</span> <span class="p">[(</span><span class="n">message_stream_name</span> <span class="ow">or</span> <span class="s2">&quot;primary&quot;</span><span class="p">,</span> <span class="n">flat_describe_collect_dict</span><span class="p">)]</span>
             <span class="c1"># Validate that all of the values nested values are DataKeys</span>
             <span class="k">elif</span> <span class="n">_contains_message_stream_name</span><span class="p">(</span><span class="n">describe_collect_dict</span><span class="p">):</span>
                 <span class="c1"># We have Dict[str, Dict[str, DataKey]] so return its items</span>
-                <span class="c1"># TODO: remove cast after python 3.9 is no longer supported</span>
-                <span class="n">nested_describe_collect_dict</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]],</span> <span class="n">describe_collect_dict</span><span class="p">)</span>
+                <span class="n">nested_describe_collect_dict</span> <span class="o">=</span> <span class="n">describe_collect_dict</span>
                 <span class="k">if</span> <span class="n">message_stream_name</span> <span class="ow">and</span> <span class="nb">list</span><span class="p">(</span><span class="n">nested_describe_collect_dict</span><span class="p">)</span> <span class="o">!=</span> <span class="p">[</span><span class="n">message_stream_name</span><span class="p">]:</span>
                     <span class="c1"># The collect contained a name and describe_collect returned a Dict[str, Dict[str, DataKey]],</span>
                     <span class="c1"># this is only acceptable if the only key in the parent dict is message_stream_name</span>
@@ -1312,12 +1781,6 @@ window.addEventListener("load", () => mermaid.run());
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Empty dict, could be either but we don&#39;t care</span>
             <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cache_describe_collect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Collectable</span><span class="p">):</span>
-        <span class="s2">&quot;Read the object&#39;s describe and cache it.&quot;</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="n">check_supports</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Collectable</span><span class="p">)</span>
-        <span class="n">c</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]]]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">maybe_await</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">describe_collect</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_collect_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_describe_collect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collect_object</span><span class="p">:</span> <span class="n">Flyable</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Read an object&#39;s describe_collect and cache it.</span>
@@ -1342,7 +1805,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">            }</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_cached</span><span class="p">(</span><span class="n">collect_object</span><span class="p">,</span> <span class="n">collect</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_describe_collect</span><span class="p">(</span><span class="n">collect_object</span><span class="p">)</span>
 
         <span class="n">describe_collect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_describe_collect_cache</span><span class="p">[</span><span class="n">collect_object</span><span class="p">]</span>
         <span class="n">describe_collect_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_datakeys_with_stream_name</span><span class="p">(</span><span class="n">describe_collect</span><span class="p">)</span>
@@ -1375,6 +1838,12 @@ window.addEventListener("load", () => mermaid.run());
             <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">stream_name</span><span class="p">,</span> <span class="n">stream_data_keys</span> <span class="ow">in</span> <span class="n">describe_collect_items</span><span class="p">:</span>
+            <span class="c1"># Will this be okay left at last stream?</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_stream_cache</span><span class="p">(</span><span class="n">stream_name</span><span class="p">)</span>
+            <span class="c1"># Should we make the describe_cache the describe_collect_cache?</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">describe_cache</span><span class="p">[</span><span class="n">collect_object</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream_data_keys</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">ensure_cached</span><span class="p">(</span><span class="n">collect_object</span><span class="p">,</span> <span class="n">collect</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="n">stream_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_descriptor_objs</span> <span class="ow">or</span> <span class="p">(</span>
                 <span class="n">collect_object</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_descriptor_objs</span><span class="p">[</span><span class="n">stream_name</span><span class="p">]</span>
             <span class="p">):</span>
@@ -1421,9 +1890,8 @@ window.addEventListener("load", () => mermaid.run());
 
         <span class="k">return</span> <span class="n">indices_difference</span>
 
-    <span class="c1"># message strem name here?</span>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_pack_external_assets</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">asset_docs</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Asset</span><span class="p">,</span> <span class="n">StreamAsset</span><span class="p">]],</span> <span class="n">message_stream_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">asset_docs</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Asset</span> <span class="o">|</span> <span class="n">StreamAsset</span><span class="p">],</span> <span class="n">message_stream_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Packs some external asset documents with relevant information from the run.&quot;&quot;&quot;</span>
 
@@ -1516,7 +1984,7 @@ window.addEventListener("load", () => mermaid.run());
         <span class="n">collect_obj</span><span class="p">:</span> <span class="n">EventCollectable</span><span class="p">,</span>
         <span class="n">local_descriptors</span><span class="p">,</span>
         <span class="n">return_payload</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-        <span class="n">message_stream_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">message_stream_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">pages</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">frozenset</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Event</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
@@ -1565,7 +2033,7 @@ window.addEventListener("load", () => mermaid.run());
         <span class="n">collect_obj</span><span class="p">:</span> <span class="n">EventPageCollectable</span><span class="p">,</span>
         <span class="n">local_descriptors</span><span class="p">,</span>
         <span class="n">return_payload</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-        <span class="n">message_stream_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">message_stream_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -1613,7 +2081,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">        Where there must be at least one collect object. If multiple are used</span>
 <span class="sd">        they must obey the WritesStreamAssets protocol.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">stream_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">stream_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_is_open</span><span class="p">:</span>
             <span class="c1"># sanity check -- &#39;kickoff&#39; should catch this and make this</span>
@@ -1655,7 +2123,7 @@ window.addEventListener("load", () => mermaid.run());
             <span class="bp">self</span><span class="o">.</span><span class="n">_uncollected</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
         <span class="c1"># Get the provided message stream name for singly nested scans</span>
-        <span class="n">message_stream_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">message_stream_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="c1"># Retrive the stream names from pre-declared streams</span>
         <span class="n">declared_stream_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_declared_stream_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">frozenset</span><span class="p">(</span><span class="n">collect_objects</span><span class="p">),</span> <span class="p">[])</span>
@@ -1777,7 +2245,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">            object.configure(*args, **kwargs)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">obj</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_read_config</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">cache_read_config</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="c1"># Invalidate any event descriptors that include this object.</span>
         <span class="c1"># New event descriptors, with this new configuration, will</span>
         <span class="c1"># be created for any future event documents.</span>
@@ -1787,7 +2255,22 @@ window.addEventListener("load", () => mermaid.run());
                 <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_descriptors</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
                 <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_stream</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">obj_set</span><span class="p">)</span>
                 <span class="k">continue</span></div>
-</div>
+
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cache_describe_collect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Flyable</span><span class="p">):</span>
+        <span class="s2">&quot;Read the object&#39;s describe_collect and cache it.&quot;</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_describe_collect_cache</span><span class="p">:</span>
+            <span class="n">collectable_obj</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Collectable</span><span class="p">,</span> <span class="n">check_supports</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Collectable</span><span class="p">))</span>
+            <span class="n">c</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataKey</span><span class="p">]]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">maybe_await</span><span class="p">(</span>
+                <span class="n">collectable_obj</span><span class="o">.</span><span class="n">describe_collect</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_collect_cache</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_ensure_cached</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">collect</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="n">coros</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_stream_cache</span><span class="o">.</span><span class="n">ensure_cached</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">collect</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">collect</span><span class="p">:</span>
+            <span class="n">coros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_describe_collect</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">coros</span><span class="p">)</span></div>
 
 </pre></div>
 
@@ -1818,8 +2301,8 @@ window.addEventListener("load", () => mermaid.run());
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1853,7 +2336,7 @@ window.addEventListener("load", () => mermaid.run());
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.17.1.
 </p></div>
       
     </div>
